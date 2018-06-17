@@ -190,22 +190,16 @@ Game.prototype.TileMerge = function() {
     // loop through all tiles
     gameBoard.forEach(function(val, index, array) {  
 
-        // @TODO: temporary error handling 
-        if (val.tilesArray.length > 2) {
-            console.log("val:")
-            console.log(val); 
-            console.log("index: " + index);           
-            throw "Too many tiles in Tile Array"
-        }
-        // end @TODO
-
-        if (val.tilesArray.length === 2) {
+      console.log(val.tilesArray.length);
+      if (val.tilesArray.length === 2) {
+        
             // get current value of 1st tile
             var currentValue = val.tilesArray[0].valueProp; 
             // update value
-            val.tilesArray[0].valueProp = currentValue * 2;  
+            val.tilesArray[0].value = currentValue * 2;  
             // remove 2nd tile
-            val.pop();
+            var x = val.tilesArray.pop();
+            x.el.remove(); 
             // update score
             newScore += currentValue;  
         }
@@ -235,9 +229,13 @@ Game.prototype.moveAnimations = function(gameBoard) {
     
   $.when.apply($, promiseArray).then(function() {
     self.moveInProgress = false; 
+    self.TileMerge(); 
+    self.initTile(); 
   });
   if (promiseArray.length === 0) {
     self.moveInProgress = false; 
+    self.TileMerge(); 
+    self.initTile();
   }   
   
 };
@@ -302,6 +300,8 @@ function Tile(x, y, game) {
                 return this.valueProp;
             },
             "set": function (val) {
+                console.log("value set");
+                console.log(val); 
                 this.valueProp = val;
                 this.el.find(".tile_number").html(this.valueProp);
             }

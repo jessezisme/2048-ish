@@ -56,14 +56,13 @@ body {
 .tile-container {
   /* absolutely positioned over gameboard to match dimensions */
   position: absolute; 
-  top: 0; left: 0; right: 0; bottom: 0;
-  padding: 8px; 
+  top: 8px; left: 8px; right: 8px; bottom: 8px;
   border-radius: $grid-border-radius; 
 }
 .tile { 
   @extend .grid_cell; 
   background: #eee4da;     
   background-clip: content-box; 
-  position: relative; 
+  position: absolute; 
 }
 /**/
