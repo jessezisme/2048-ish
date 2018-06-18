@@ -11,12 +11,12 @@ function Game(size) {
     this.columns = size;
     // board is set as 2d array, with grid cell object for each position
     this.board = [];
-    this.boardFlatten = function() {
+    this.boardFlatten = function () {
         return _.flatten(this.board);
-    }; 
-    this.score = 0; 
-  
-    this.moveInProgress = false; 
+    };
+    this.score = 0;
+
+    this.moveInProgress = false;
 
 }
 Game.prototype.initialize = function () {
@@ -54,13 +54,13 @@ Game.prototype.initBoard = function () {
  * Initialize tiles 
  */
 Game.prototype.initTile = function () {
-    
-    this.isGameOver(); 
-  
-    var emptyCell = this.getRandomEmptyCell();        
+
+    this.isGameOver();
+
+    var emptyCell = this.getRandomEmptyCell();
     var tile = new Tile(emptyCell.x, emptyCell.y, game);
-  
-    this.isGameOver(); 
+
+    this.isGameOver();
 }
 /**/
 
@@ -70,7 +70,7 @@ Game.prototype.initTile = function () {
 Game.prototype.initEventListeners = function () {
     var self = this;
     /* keypress events for up, down, left, right */
-    $('body').on('keydown', function (event) {       
+    $('body').on('keydown', function (event) {
         switch (event.which) {
             // left 
             case 37:
@@ -96,15 +96,15 @@ Game.prototype.initEventListeners = function () {
 /**
  * Game is WON!
  */
-Game.prototype.gameWon = function() {
-    alert("you won"); 
+Game.prototype.gameWon = function () {
+    alert("you won");
 }
 /**/
 
 /**
  * Game is LOST!
  */
-Game.prototype.gameLost = function() {
+Game.prototype.gameLost = function () {
     alert("what a loser!");
 }
 /**/
@@ -112,48 +112,48 @@ Game.prototype.gameLost = function() {
 /**
  * Check if game over
  */
-Game.prototype.isGameOver = function() {
-    var gameBoard = this.boardFlatten(); 
+Game.prototype.isGameOver = function () {
+    var gameBoard = this.boardFlatten();
 
-    var is2048 = false; 
-    var canAnyTileMove = false; 
-    var hasEmptyCells = false; 
+    var is2048 = false;
+    var canAnyTileMove = false;
+    var hasEmptyCells = false;
 
     // check if 2048
-    gameBoard.forEach(function(val, index, array) {
-        val.tilesArray.forEach(function(val, index, array) {
+    gameBoard.forEach(function (val, index, array) {
+        val.tilesArray.forEach(function (val, index, array) {
             if (val.valueProp === 2048) {
-                is2048 = true; 
-            } 
+                is2048 = true;
+            }
         });
     })
     // check if there are empty cells 
     if (this.getEmptyCells().length > 0) {
-        hasEmptyCells = true; 
-    }     
+        hasEmptyCells = true;
+    }
     // Check if move possible
-    gameBoard.forEach(function(val, index, array) {
-        val.tilesArray.forEach(function(val, index, array) {
-            val.moveCheck(); 
+    gameBoard.forEach(function (val, index, array) {
+        val.tilesArray.forEach(function (val, index, array) {
+            val.moveCheck();
             if (val.canMove === true) {
-                canAnyTileMove = true; 
+                canAnyTileMove = true;
             }
         });
-    });   
-    
+    });
+
     // if game won
     if (is2048) {
-        this.gameWon(); 
-        return true; 
+        this.gameWon();
+        return true;
     }
     // if no empty cells || no tile can move, the game is lost
-    else if ( !hasEmptyCells && !canAnyTileMove) {
-        this.gameLost(); 
-        return true; 
+    else if (!hasEmptyCells && !canAnyTileMove) {
+        this.gameLost();
+        return true;
     }
     // if there is an empty || a tile can move, return false for isGameOver
     else {
-        return false; 
+        return false;
     }
     //     
 };
@@ -175,7 +175,7 @@ Game.prototype.getEmptyCells = function () {
 Game.prototype.getRandomEmptyCell = function () {
     var emptyGridCells = this.getEmptyCells();
     var randomIndex = Math.floor(Math.random() * Math.floor(emptyGridCells.length));
- 
+
     return emptyGridCells[randomIndex];
 };
 /**/
@@ -183,76 +183,74 @@ Game.prototype.getRandomEmptyCell = function () {
 /**
  * Merge tiles
  */
-Game.prototype.TileMerge = function() {
-    var gameBoard = this.boardFlatten(); 
-    var newScore = this.score; 
+Game.prototype.TileMerge = function () {
+    var gameBoard = this.boardFlatten();
+    var newScore = this.score;
 
     // loop through all tiles
-    gameBoard.forEach(function(val, index, array) {  
+    gameBoard.forEach(function (val, index, array) {
 
-      console.log(val.tilesArray.length);
-      if (val.tilesArray.length === 2) {
-        
+        if (val.tilesArray.length === 2) {
             // get current value of 1st tile
-            var currentValue = val.tilesArray[0].valueProp; 
+            var currentValue = val.tilesArray[0].valueProp;
             // update value
-            val.tilesArray[0].value = currentValue * 2;  
+            val.tilesArray[0].value = currentValue * 2;
             // remove 2nd tile
             var x = val.tilesArray.pop();
-            x.el.remove(); 
+            x.el.remove();
             // update score
-            newScore += currentValue;  
+            newScore += currentValue;
         }
-    }); 
+    });
     // update game score at the end
-    this.score = newScore; 
+    this.score = newScore;
 }
 /**/
 
 /**
  * Move animations 
  */
-Game.prototype.moveAnimations = function(gameBoard) {
-  var self = this; 
-  var promiseArray = []; 
-  
-  if (this.moveInProgress) {
-    return false; 
-  }
-  
-  this.moveInProgress = true; 
-  gameBoard.forEach(function(val, index, array) {        
-      val.tilesArray.forEach(function(val, index, array) {
-        promiseArray.push(val.animatePosition())
-      })
-  });
-    
-  $.when.apply($, promiseArray).then(function() {
-    self.moveInProgress = false; 
-    self.TileMerge(); 
-    self.initTile(); 
-  });
-  if (promiseArray.length === 0) {
-    self.moveInProgress = false; 
-    self.TileMerge(); 
-    self.initTile();
-  }   
-  
+Game.prototype.moveAnimations = function (gameBoard) {
+    var self = this;
+    var promiseArray = [];
+
+    if (this.moveInProgress) {
+        return false;
+    }
+
+    this.moveInProgress = true;
+    gameBoard.forEach(function (val, index, array) {
+        val.tilesArray.forEach(function (val, index, array) {
+            promiseArray.push(val.animatePosition())
+        })
+    });
+
+    $.when.apply($, promiseArray).then(function () {
+        self.moveInProgress = false;
+        self.TileMerge();
+        self.initTile();
+    });
+    if (promiseArray.length === 0) {
+        self.moveInProgress = false;
+        self.TileMerge();
+        self.initTile();
+    }
+
 };
 /**/
 
 /**
  * Move logic 
  */
-Game.prototype.move = function(getDirection) {
+Game.prototype.move = function (getDirection) {
     // direction passed as argument
-    var direction = getDirection.toLowerCase(); 
-    var gameBoard; 
-  
+    var direction = getDirection.toLowerCase();
+    var gameBoard;
+
     if (this.moveInProgress) {
-      return false; 
+        return false;
     }
-  
+
     // if UP:
     if (direction === "up") {
         gameBoard = _.orderBy(this.boardFlatten(), "y", "asc");
@@ -270,11 +268,11 @@ Game.prototype.move = function(getDirection) {
         gameBoard = _.orderBy(this.boardFlatten(), "y", "asc");
     }
     // loop through all tiles and run tile move foreach
-    gameBoard.forEach(function(val, index, array) {
-        val.tilesArray.length ? val.tilesArray.forEach(function(val){val.move(direction)}) : false; 
-    }); 
+    gameBoard.forEach(function (val, index, array) {
+        val.tilesArray.length ? val.tilesArray.forEach(function (val) { val.move(direction) }) : false;
+    });
     // run animation logic at the end
-    this.moveAnimations(gameBoard); 
+    this.moveAnimations(gameBoard);
 }
 /**/
 
@@ -285,7 +283,7 @@ Game.prototype.move = function(getDirection) {
 * Tile
 */
 function Tile(x, y, game) {
-    this.game = game; 
+    this.game = game;
 
     // jQuery element  
     this.el;
@@ -301,14 +299,14 @@ function Tile(x, y, game) {
             },
             "set": function (val) {
                 console.log("value set");
-                console.log(val); 
+                console.log(val);
                 this.valueProp = val;
                 this.el.find(".tile_number").html(this.valueProp);
             }
         }
     });
     // can move flag
-    this.canMove = false; 
+    this.canMove = false;
     // initialize
     this.initialize();
 };
@@ -316,7 +314,7 @@ function Tile(x, y, game) {
 /**
  * Initialize
  */
-Tile.prototype.initialize = function() {
+Tile.prototype.initialize = function () {
     // Get html from template and set number text      
     var getTile = $.parseHTML($("#template_tile").html());
     this.el = $(getTile);
@@ -331,18 +329,18 @@ Tile.prototype.initialize = function() {
 /**
  * Set new position
  */
-Tile.prototype.setPosition = function(getX, getY) {
+Tile.prototype.setPosition = function (getX, getY) {
     this.x = getX;
-    this.y = getY; 
-    this.game.board[getX][getY].tilesArray.push(this);                
+    this.y = getY;
+    this.game.board[getX][getY].tilesArray.push(this);
 };
 /**/
 
 /**
  * Remove old position
  */
-Tile.prototype.removeOldPosition = function(getX, getY) {
-    this.game.board[getX][getY].tilesArray.pop(); 
+Tile.prototype.removeOldPosition = function (getX, getY) {
+    this.game.board[getX][getY].tilesArray.pop();
 };
 /**/
 
@@ -356,94 +354,85 @@ Tile.prototype.animatePosition = function (initalizeFlag) {
     var animationDuration = initalizeFlag ? 0 : 250;
     // Add animation class as flag for in-progress
     this.el.addClass("animate");
-  
-    // Animate to correct position    
-    // this.el.animate({
-    //     top: fromTop + "%",
-    //     left: fromLeft + "%"
-    // }, animationDuration, function() {
-    //     $(this).removeClass("animate"); 
-    // });   
-    
-  var getPromise = this.el.animate({
+
+    var getPromise = this.el.animate({
         top: fromTop + "%",
         left: fromLeft + "%"
-    }, animationDuration).promise(); 
-  
-  getPromise.done(function() {
-    $(this).removeClass("animate")
-  })
-  
-  return getPromise; 
-    
-  
+    }, animationDuration).promise();
+
+    getPromise.done(function () {
+        $(this).removeClass("animate")
+    })
+
+    return getPromise;
+
+
 };
 /**/
 
 /**
  * Check if move is possible
  */
-Tile.prototype.moveCheck = function() {
+Tile.prototype.moveCheck = function () {
     // run all checks; return true if any moves are possible
-    if (  this.move("up", true) || this.move("right", true) || this.move("down", true) || this.move("left", true)  ) {
-        this.canMove = true; 
-        return true; 
-    }  
-    else {
-        this.canMove = false; 
-        return false; 
+    if (this.move("up", true) || this.move("right", true) || this.move("down", true) || this.move("left", true)) {
+        this.canMove = true;
+        return true;
     }
-    // this.move("up", true) || this.move("right", true) || this.move("down", true) || this.move("left", true) ? true : false; 
+    else {
+        this.canMove = false;
+        return false;
+    }
 };
 /**/
 
 /**
  * Move logic  
  */
-Tile.prototype.move = function(getDirection, checkFlag) {
+Tile.prototype.move = function (getDirection, checkFlag) {
 
-    var checkFlag = checkFlag ? true : false; 
-    var direction = getDirection.toLowerCase(); 
-    var getX = this.x; 
-    var getY = this.y; 
+    var checkFlag = checkFlag ? true : false;
+    var direction = getDirection.toLowerCase();
+    var getX = this.x;
+    var getY = this.y;
 
-    var getNext; 
-    var isNextMatch; 
-    var isNextEmpty; 
-    var nextPositionArray = []; 
+    var getNext;
+    var isNextMatch;
+    var isNextEmpty;
+    var nextPositionArray = [];
 
     // if UP: check next position
     if (direction === "up") {
-        getNext = this.y > 0 ? this.game.board[this.x][this.y - 1] : false; 
+        getNext = this.y > 0 ? this.game.board[this.x][this.y - 1] : false;
         nextPositionArray.push(this.x, this.y - 1);
     }
     // if RIGHT: check next position
     else if (direction === "right") {
-        getNext = this.x < 3 ? this.game.board[this.x + 1][this.y] : false; 
-        nextPositionArray.push(this.x + 1, this.y); 
+        getNext = this.x < 3 ? this.game.board[this.x + 1][this.y] : false;
+        nextPositionArray.push(this.x + 1, this.y);
     }
     // if DOWN: check next position   
-    else if (direction === "down")  {
-        getNext = this.y < 3 ? this.game.board[this.x][this.y + 1] : false; 
-        nextPositionArray.push(this.x, this.y + 1);         
+    else if (direction === "down") {
+        getNext = this.y < 3 ? this.game.board[this.x][this.y + 1] : false;
+        nextPositionArray.push(this.x, this.y + 1);
     }
     // if LEFT: check next position
     else if (direction === "left") {
         getNext = this.x > 0 ? this.game.board[this.x - 1][this.y] : false;
-        nextPositionArray.push(this.x - 1, this.y); 
+        nextPositionArray.push(this.x - 1, this.y);
     }
     // Check if next position contains match or is empty
-    isNextMatch = getNext && getNext.tilesArray.length === 1 && getNext.tilesArray[0].valueProp === this.valueProp; 
-    isNextEmpty = getNext && getNext.tilesArray.length === 0; 
+    isNextMatch = getNext && getNext.tilesArray.length === 1 && getNext.tilesArray[0].valueProp === this.valueProp;
+    isNextEmpty = getNext && getNext.tilesArray.length === 0;
     // 
 
     // "check only" mode; only to check if tile can move 
     if (checkFlag) {
-        return isNextEmpty || isNextMatch ? true : false; 
+        return isNextEmpty || isNextMatch ? true : false;
     }
     // not "check only" mode; will actually run move logic
     else if (isNextEmpty || isNextMatch) {
-        this.setPosition(nextPositionArray[0], nextPositionArray[1] );
+        this.setPosition(nextPositionArray[0], nextPositionArray[1]);
         this.removeOldPosition(getX, getY);
         // do NOT continue to move if a tile has matched - and therefore MERGED into adjoining tile
         if (!isNextMatch) {
