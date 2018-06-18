@@ -301,7 +301,7 @@ function Tile(x, y, game) {
                 console.log("value set");
                 console.log(val);
                 this.valueProp = val;
-                this.el.find(".tile_number").html(this.valueProp);
+                this.el.find(".tile_number").html(this.valueProp).attr("data-value", val);
             }
         }
     });
@@ -318,7 +318,7 @@ Tile.prototype.initialize = function () {
     // Get html from template and set number text      
     var getTile = $.parseHTML($("#template_tile").html());
     this.el = $(getTile);
-    this.el.find(".tile_number").html(this.valueProp);
+    this.el.find(".tile_number").html(this.valueProp).attr("data-value", 2);
     // Set position and append to page; initializeFlag is set to True to remove animation and append immediately in correct position   
     this.setPosition(this.x, this.y);
     this.animatePosition(true);

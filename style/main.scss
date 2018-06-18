@@ -1,10 +1,35 @@
 /*
   Variables:
 */
-
 $grid-padding: 8px;
 $grid-border-radius: 5px;
+
+// white
+$color-background: #F2EFEA;
+$color-list:
+   // darke beige    
+   #B19994,
+   // tangerine    
+   #DD7373,
+   // lavender blue;     
+   #7D53DE,
+   // grape
+   #6622CC,
+   // teal  
+   #00BFB2,
+   // lavender    
+   #C06FF2,
+   // deep voilet    
+   #340068,
+   // yankee blue    
+   #3E92CC,
+   // raspberry
+   #D8315B,
+   // licorice
+   #1C0B19,
+   #1C0B19; 
 /**/
+
 
 *,
 *:before,
@@ -15,10 +40,14 @@ $grid-border-radius: 5px;
 html {
     min-height: 100%;
     width: 100%;
-    background: -webkit-linear-gradient(90deg, rgb(46, 17, 65), rgb(26, 19, 109));
-    background: linear-gradient(90deg, rgb(46, 17, 65), rgb(26, 19, 109));
+    
+    // background: -webkit-linear-gradient(90deg, rgb(46, 17, 65), rgb(26, 19, 109));
+    // background: linear-gradient(90deg, rgb(46, 17, 65), rgb(26, 19, 109));     
+    
+    background: #F2EFEA;   
+    font-family: 'Rubik', sans-serif;
+    
 }
-
 .page {
     margin: 30px 0 0 0;
 }
@@ -27,7 +56,6 @@ html {
   Gameboard:
   the container for the static grid background; and generated tiles/numbers;
 */
-
 .gameboard {
     /* Position: relative; set for tile-container, which absolutely positions over it to match grid's dimensions; */
     position: relative;
@@ -77,12 +105,33 @@ html {
     bottom: 8px;
     border-radius: $grid-border-radius;
 }
-
 .tile {
     @extend .grid_cell;
+    //display:table is used to vertically align number   
+    display: table;
     background: #eee4da;
     background-clip: content-box;
     position: absolute;
+    
+    &_number {
+        display: table-cell; 
+        vertical-align: middle; 
+        text-align: center; 
+        font-size: 2rem; 
+        font-weight: bold;         
+    }
+    
 }
 
+$i: 2; 
+$listCounter: 1; 
+// increment by * 2 until 2048    
+@while $i <= 2048 {        
+    .tile_number[data-value="#{$i}"] {
+        background: nth($color-list, $listCounter);
+        color: #fff;          
+    }      
+    $i: $i * 2; 
+    $listCounter: $listCounter + 1;     
+}
 /**/
