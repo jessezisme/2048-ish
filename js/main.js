@@ -33,10 +33,16 @@ function gameStart() {
  /*
  *  New Game
  */
- Game.prototype.newGame = function() {
-    $(".tile, .grid_cell")
-       .off()
-       .remove();
+ Game.prototype.newGame = function() {  
+    // remove tiles    
+    game.boardFlatten().forEach(function(val) { 
+       val.tilesArray.forEach(function(val){ 
+          val ? val.el.remove() : false; 
+       })   
+    });
+    // remove grid cells
+    $('.grid').empty();
+    // run new game     
     window.gameStart();
  };
  /**/
@@ -83,20 +89,15 @@ function gameStart() {
   * Set event listeners
   */
  Game.prototype.initEventListeners = function() {
+    var self = this;   
     /*
-       NOTE: Be sure to remove previous event listeners before applying new; 
-       this initialization is run each time a new game is created and otherwise multiple         listners will be applied. 
+       NOTE: Remove all event listeners before applying new, 
+       because this initialization runs each time a new game is created
      */
- 
-    var self = this;
- 
-    /* */
- 
+    $("body, body *").off();   
     /**/
- 
     /* keypress events for up, down, left, right */
     $("body")
-       .off("keydown.move")
        .on("keydown.move", function(event) {
           event.preventDefault();
           switch (event.which) {
@@ -118,11 +119,9 @@ function gameStart() {
                 break;
           }
        });
-    /* */
- 
+    /**/
     /* New game click handler */
     $('[data-js="newGame"]')
-       .off("click.newGame")
        .on("click.newGame", self.newGame);
     /**/
  };
@@ -330,8 +329,6 @@ function gameStart() {
              return this.valueProp;
           },
           set: function(val) {
-             console.log("value set");
-             console.log(val);
              this.valueProp = val;
              this.el
                 .find(".tile_number")
