@@ -136,7 +136,7 @@ h2 {
 
 /**/
 
-/* 
+/*
   Gameboard:
   the container for the static grid background; and generated tiles/numbers;
 */
@@ -162,9 +162,9 @@ h2 {
 
 /**/
 
-/* 
-  Grid: 
-  Creates the static grid background and individual grid cells; 
+/*
+  Grid:
+  Creates the static grid background and individual grid cells;
 */
 
 .grid {
@@ -190,8 +190,8 @@ h2 {
 /**/
 
 /*
-  Tile container: 
-  Contains the dynamically-generated tiles; 
+  Tile container:
+  Contains the dynamically-generated tiles;
   absolutely positioned over gameboard to match grid dimensions;
 */
 
@@ -222,7 +222,7 @@ h2 {
     }
 }
 
-/*  
+/*
    Codepen has a sass compilation bug with "while" loops; the styling below would normally be outputted by the while loop
 */
 

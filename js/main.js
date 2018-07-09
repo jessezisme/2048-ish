@@ -1,9 +1,9 @@
 /**
- * TODO: 
- * - Elaborate comments 
+ * TODO:
+ * - Elaborate comments
  * - Style win/lose, move out of "alert"
- * - convert jquery animations to css for better performance 
- * - Add in previous high score via localstorage 
+ * - convert jquery animations to css for better performance
+ * - Add in previous high score via localstorage
  * - Update footer
  */
 
@@ -292,10 +292,10 @@ Game.prototype.move = function(getDirection) {
     var gameBoard;
     // direction passed as argument
     var direction = getDirection.toLowerCase();
-    // 
-    // flag to check whether any 
+    //
+    // flag to check whether any
     var hasAnyTileMoved = false;
-    // 
+    //
     if (this.moveInProgress) {
         return false;
     }
@@ -315,7 +315,7 @@ Game.prototype.move = function(getDirection) {
     }
 
     // loop through all tiles and run tile move foreach
-    // 
+    //
     gameBoard.forEach(function(val, index, array) {
         val.tilesArray.length
             ? val.tilesArray.forEach(function(val) {
@@ -326,7 +326,7 @@ Game.prototype.move = function(getDirection) {
             })
             : false;
     });
-    // 
+    //
     // run animation logic at the end
     hasAnyTileMoved ? this.moveAnimations(gameBoard) : false;
 };
