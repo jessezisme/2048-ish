@@ -28,6 +28,13 @@ $color-list: #b19994,
     box-sizing: border-box;
 }
 
+button,
+a {
+    &:hover {
+        cursor: pointer;
+    }
+}
+
 .clearfix::after {
     content: "";
     display: block;
@@ -70,8 +77,11 @@ h2 {
 /* Guide instructions */
 
 .guide {
-    border-top: 1px solid grey;
     border-bottom: 1px solid grey;
+    &:first-of-type {
+        margin-top: 4rem;
+        border-top: 1px solid gray;
+    }
     &_arrow {
         display: inline-block;
         margin: 15px;
@@ -122,16 +132,6 @@ h2 {
             font-size: 2rem;
         }
     }
-}
-
-/**/
-
-/* footer*/
-
-.footer {
-    margin-top: 60px;
-    border-top: 1px solid grey;
-    min-height: 30vh;
 }
 
 /**/
