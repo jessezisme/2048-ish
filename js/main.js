@@ -1,5 +1,15 @@
+/**
+ * TODO:
+ * - Remove lodash; it's unncessary.
+ * - Elaborate comments
+ * - Style win/lose, move out of "alert"
+ * - convert jquery animations to css for better performance
+ * - Add in previous high score via localstorage
+ * - Update footer
+ */
+
 /*
-* Dependencies: 
+* Dependencies:
 * Lodash, jQuery
 */
 
@@ -10,7 +20,7 @@ function gameStart() {
  $(document).ready(gameStart);
  
  /*
- * Game Board 
+ * Game Board
  */
  function Game(size) {
     this.rows = size;
@@ -20,30 +30,29 @@ function gameStart() {
     this.boardFlatten = function() {
        return _.flatten(this.board);
     };
+    //
+    // score setup
     this.score = 0;
     $('[data-js="score"]').html(this.score.toString());
+    //
+    // flag to check whether any tile movement is in progress;
     this.moveInProgress = false;
+    //
  }
+ 
+ /**
+  * Run all initializations
+  */
  Game.prototype.initialize = function() {
+    // clear any previous grid; per jQuery docs, empty also removes event listeners
+    $(".grid").empty();
+    $(".tile-container").empty();
+    //
+    // run new setup
     this.initBoard();
     this.initTile();
     this.initEventListeners();
- };
- 
- /*
- *  New Game
- */
- Game.prototype.newGame = function() {  
-    // remove tiles    
-    game.boardFlatten().forEach(function(val) { 
-       val.tilesArray.forEach(function(val){ 
-          val ? val.el.remove() : false; 
-       })   
-    });
-    // remove grid cells
-    $('.grid').empty();
-    // run new game     
-    window.gameStart();
+    //
  };
  /**/
  
@@ -61,6 +70,7 @@ function gameStart() {
           tilesArray: []
        };
     }
+    //
     // create 2d array and push grid cell object
     for (var x = 0; x < this.rows; x++) {
        var newArray = [];
@@ -71,17 +81,21 @@ function gameStart() {
           rowCell.push(gridObj);
        }
     }
+    //
  };
+ 
  /**
   * Initialize tiles
   */
  Game.prototype.initTile = function() {
+    // isGameOver determines whether the game is finished; needs to be run: before and after creating tile
     this.isGameOver();
- 
+    //
     var emptyCell = this.getRandomEmptyCell();
     var tile = new Tile(emptyCell.x, emptyCell.y, game);
- 
+    // isGameOver determines whether the game is finished; needs to be run: before and after creating tile
     this.isGameOver();
+    //
  };
  /**/
  
@@ -89,15 +103,14 @@ function gameStart() {
   * Set event listeners
   */
  Game.prototype.initEventListeners = function() {
-    var self = this;   
+    var self = this;
     /*
-       NOTE: Remove all event listeners before applying new, 
-       because this initialization runs each time a new game is created
-     */
-    $("body, body *").off();   
-    /**/
-    /* keypress events for up, down, left, right */
+           NOTE: Remove event listeners before applying new listeners,
+           because this initialization runs each time a new game is created
+         */
+    // keypress events for up, down, left, right
     $("body")
+       .off("keydown.move")
        .on("keydown.move", function(event) {
           event.preventDefault();
           switch (event.which) {
@@ -119,11 +132,12 @@ function gameStart() {
                 break;
           }
        });
-    /**/
-    /* New game click handler */
+    //
+    // New game click handler
     $('[data-js="newGame"]')
-       .on("click.newGame", self.newGame);
-    /**/
+       .off("click.newGame")
+       .on("click.newGame", window.gameStart);
+    //
  };
  /**/
  
@@ -276,10 +290,13 @@ function gameStart() {
   * Move logic
   */
  Game.prototype.move = function(getDirection) {
+    var gameBoard;
     // direction passed as argument
     var direction = getDirection.toLowerCase();
-    var gameBoard;
- 
+    //
+    // flag to check whether any
+    var hasAnyTileMoved = false;
+    //
     if (this.moveInProgress) {
        return false;
     }
@@ -297,16 +314,22 @@ function gameStart() {
        // if LEFT
        gameBoard = _.orderBy(this.boardFlatten(), "y", "asc");
     }
+ 
     // loop through all tiles and run tile move foreach
+    //
     gameBoard.forEach(function(val, index, array) {
        val.tilesArray.length
           ? val.tilesArray.forEach(function(val) {
-               val.move(direction);
+               if (val.move(direction, true)) {
+                  hasAnyTileMoved = true;
+                  val.move(direction);
+               }
             })
           : false;
     });
+    //
     // run animation logic at the end
-    this.moveAnimations(gameBoard);
+    hasAnyTileMoved ? this.moveAnimations(gameBoard) : false;
  };
  /**/
  
