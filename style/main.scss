@@ -222,61 +222,14 @@ h2 {
     }
 }
 
-/*
-   Codepen has a sass compilation bug with "while" loops; the styling below would normally be outputted by the while loop
-*/
-
-.tile_number[data-value="2"] {
-    background: #b19994;
-    color: #fff;
-}
-
-.tile_number[data-value="4"] {
-    background: #dd7373;
-    color: #fff;
-}
-
-.tile_number[data-value="8"] {
-    background: #7d53de;
-    color: #fff;
-}
-
-.tile_number[data-value="16"] {
-    background: #6622cc;
-    color: #fff;
-}
-
-.tile_number[data-value="32"] {
-    background: #00bfb2;
-    color: #fff;
-}
-
-.tile_number[data-value="64"] {
-    background: #c06ff2;
-    color: #fff;
-}
-
-.tile_number[data-value="128"] {
-    background: #340068;
-    color: #fff;
-}
-
-.tile_number[data-value="256"] {
-    background: #3e92cc;
-    color: #fff;
-}
-
-.tile_number[data-value="512"] {
-    background: #d8315b;
-    color: #fff;
-}
-
-.tile_number[data-value="1024"] {
-    background: #1c0b19;
-    color: #fff;
-}
-
-.tile_number[data-value="2048"] {
-    background: #1c0b19;
-    color: #fff;
+$i: 2; 
+$listCounter: 1; 
+// increment by * 2 until 2048    
+@while $i <= 2048 {        
+    .tile_number[data-value="#{$i}"] {
+        background: nth($color-list, $listCounter);
+        color: #fff;          
+    }      
+    $i: $i * 2; 
+    $listCounter: $listCounter + 1;     
 }
