@@ -10,7 +10,7 @@
 
 /*
 * Dependencies:
-* Lodash, jQuery
+* Lodash, jQuery, hammerjs
 */
 
 function gameStart() {
@@ -18,10 +18,10 @@ function gameStart() {
     window.game.initialize();
  }
  $(document).ready(gameStart);
- 
+
  /*
- * Game Board
- */
+    * Game Board
+    */
  function Game(size) {
     this.rows = size;
     this.columns = size;
@@ -39,7 +39,7 @@ function gameStart() {
     this.moveInProgress = false;
     //
  }
- 
+
  /**
   * Run all initializations
   */
@@ -55,7 +55,7 @@ function gameStart() {
     //
  };
  /**/
- 
+
  /**
   * Initialize grid
   */
@@ -83,7 +83,7 @@ function gameStart() {
     }
     //
  };
- 
+
  /**
   * Initialize tiles
   */
@@ -98,16 +98,38 @@ function gameStart() {
     //
  };
  /**/
- 
+
  /**
   * Set event listeners
   */
  Game.prototype.initEventListeners = function() {
     var self = this;
+
     /*
-           NOTE: Remove event listeners before applying new listeners,
-           because this initialization runs each time a new game is created
-         */
+        Touch events with Hammerjs
+    */
+    var getGameboard = document.getElementById("touchGameboard");
+    var hammertime = new Hammer(getGameboard);
+    hammertime.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
+    hammertime
+    .on("swipeleft", function(ev) {
+        self.move("left");
+    })
+    .on("swiperight", function(ev) {
+        self.move("right");
+    })
+    .on("swipedown", function(ev) {
+        self.move("down");
+    })
+    .on("swipeup", function(ev) {
+        self.move("up");
+    });
+    /**/
+
+    /*
+        NOTE: Remove event listeners before applying new listeners,
+        because this initialization runs each time a new game is created
+    */
     // keypress events for up, down, left, right
     $("body")
        .off("keydown.move")
@@ -140,7 +162,7 @@ function gameStart() {
     //
  };
  /**/
- 
+
  /**
   * Game is WON!
   */
@@ -148,7 +170,7 @@ function gameStart() {
     alert("you won");
  };
  /**/
- 
+
  /**
   * Game is LOST!
   */
@@ -156,17 +178,17 @@ function gameStart() {
     alert("what a loser!");
  };
  /**/
- 
+
  /**
   * Check if game over
   */
  Game.prototype.isGameOver = function() {
     var gameBoard = this.boardFlatten();
- 
+
     var is2048 = false;
     var canAnyTileMove = false;
     var hasEmptyCells = false;
- 
+
     // check if 2048
     gameBoard.forEach(function(val, index, array) {
        val.tilesArray.forEach(function(val, index, array) {
@@ -188,7 +210,7 @@ function gameStart() {
           }
        });
     });
- 
+
     // if game won
     if (is2048) {
        this.gameWon();
@@ -203,7 +225,7 @@ function gameStart() {
     }
     //
  };
- 
+
  /**
   * Get empty cells
   */
@@ -214,7 +236,7 @@ function gameStart() {
     return emptyCells;
  };
  /**/
- 
+
  /**
   * Return random empty cell for new tile creation
   */
@@ -223,18 +245,18 @@ function gameStart() {
     var randomIndex = Math.floor(
        Math.random() * Math.floor(emptyGridCells.length)
     );
- 
+
     return emptyGridCells[randomIndex];
  };
  /**/
- 
+
  /**
   * Merge tiles
   */
  Game.prototype.TileMerge = function() {
     var gameBoard = this.boardFlatten();
     var newScore = this.score;
- 
+
     // loop through all tiles
     gameBoard.forEach(function(val, index, array) {
        if (val.tilesArray.length === 2) {
@@ -254,25 +276,25 @@ function gameStart() {
     $('[data-js="score"]').html(this.score.toString());
  };
  /**/
- 
+
  /**
   * Move animations
   */
  Game.prototype.moveAnimations = function(gameBoard) {
     var self = this;
     var promiseArray = [];
- 
+
     if (this.moveInProgress) {
        return false;
     }
- 
+
     this.moveInProgress = true;
     gameBoard.forEach(function(val, index, array) {
        val.tilesArray.forEach(function(val, index, array) {
           promiseArray.push(val.animatePosition());
        });
     });
- 
+
     $.when.apply($, promiseArray).then(function() {
        self.moveInProgress = false;
        self.TileMerge();
@@ -285,7 +307,7 @@ function gameStart() {
     }
  };
  /**/
- 
+
  /**
   * Move logic
   */
@@ -300,7 +322,7 @@ function gameStart() {
     if (this.moveInProgress) {
        return false;
     }
- 
+
     // if UP:
     if (direction === "up") {
        gameBoard = _.orderBy(this.boardFlatten(), "y", "asc");
@@ -314,7 +336,7 @@ function gameStart() {
        // if LEFT
        gameBoard = _.orderBy(this.boardFlatten(), "y", "asc");
     }
- 
+
     // loop through all tiles and run tile move foreach
     //
     gameBoard.forEach(function(val, index, array) {
@@ -332,13 +354,13 @@ function gameStart() {
     hasAnyTileMoved ? this.moveAnimations(gameBoard) : false;
  };
  /**/
- 
+
  /*
- * Tile
- */
+    * Tile
+    */
  function Tile(x, y, game) {
     this.game = game;
- 
+
     // jQuery element
     this.el;
     // current position
@@ -365,7 +387,7 @@ function gameStart() {
     // initialize
     this.initialize();
  }
- 
+
  /**
   * Initialize
   */
@@ -383,7 +405,7 @@ function gameStart() {
     this.el.appendTo(".tile-container");
  };
  /**/
- 
+
  /**
   * Set new position
   */
@@ -393,7 +415,7 @@ function gameStart() {
     this.game.board[getX][getY].tilesArray.push(this);
  };
  /**/
- 
+
  /**
   * Remove old position
   */
@@ -401,7 +423,7 @@ function gameStart() {
     this.game.board[getX][getY].tilesArray.pop();
  };
  /**/
- 
+
  /**
   * Animate to position
   */
@@ -412,7 +434,7 @@ function gameStart() {
     var animationDuration = initalizeFlag ? 0 : 250;
     // Add animation class as flag for in-progress
     this.el.addClass("animate");
- 
+
     var getPromise = this.el
        .animate(
           {
@@ -422,15 +444,15 @@ function gameStart() {
           animationDuration
        )
        .promise();
- 
+
     getPromise.done(function() {
        $(this).removeClass("animate");
     });
- 
+
     return getPromise;
  };
  /**/
- 
+
  /**
   * Check if move is possible
   */
@@ -450,7 +472,7 @@ function gameStart() {
     }
  };
  /**/
- 
+
  /**
   * Move logic
   */
@@ -459,12 +481,12 @@ function gameStart() {
     var direction = getDirection.toLowerCase();
     var getX = this.x;
     var getY = this.y;
- 
+
     var getNext;
     var isNextMatch;
     var isNextEmpty;
     var nextPositionArray = [];
- 
+
     // if UP: check next position
     if (direction === "up") {
        getNext = this.y > 0 ? this.game.board[this.x][this.y - 1] : false;
@@ -489,7 +511,7 @@ function gameStart() {
        getNext.tilesArray[0].valueProp === this.valueProp;
     isNextEmpty = getNext && getNext.tilesArray.length === 0;
     //
- 
+
     // "check only" mode; only to check if tile can move
     if (checkFlag) {
        return isNextEmpty || isNextMatch ? true : false;
@@ -504,4 +526,3 @@ function gameStart() {
     }
  };
  /**/
- 
