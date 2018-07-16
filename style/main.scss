@@ -207,11 +207,19 @@ h2 {
 }
 
 .tile {
-    @extend .grid_cell; //display:table is used to vertically align number
+    @extend .grid_cell; 
+    //display:table is used to vertically align number
     display: table;
+    // 
     background: #eee4da;
     background-clip: content-box;
     position: absolute;
+
+    // Improve animation performance with will-change and adding z-index
+    z-index: 2; 
+    will-change: top, left, right, bottom; 
+    // 
+
     &_number {
         display: table-cell;
         vertical-align: middle;
