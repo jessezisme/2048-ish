@@ -207,19 +207,39 @@ h2 {
 }
 
 .tile {
-    @extend .grid_cell; 
-    //display:table is used to vertically align number
+    @extend .grid_cell; //display:table is used to vertically align number
     display: table;
-    // 
     background: #eee4da;
     background-clip: content-box;
     position: absolute;
-
-    // Improve animation performance with will-change and adding z-index
-    z-index: 2; 
-    will-change: top, left, right, bottom; 
-    // 
-
+    z-index: 2;
+    will-change: top left;
+    transition-property: top, left;
+    transition-duration: 0.175s;
+    transition-timing-function: ease-out;
+    &.initialize {
+        animation-name: newTile;
+        animation-duration: .175s;
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
+    }
+    @keyframes newTile {
+        0% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 0;
+            transform: scale(0);
+        }
+        75% {
+            opacity: 1;
+            transform: scale(.5);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
     &_number {
         display: table-cell;
         vertical-align: middle;
@@ -230,14 +250,35 @@ h2 {
     }
 }
 
-$i: 2; 
-$listCounter: 1; 
+@for $g from 1 through 16 {
+    $h: $g + 1;
+    .tile:nth-of-type(#{$g}) {
+        z-index: $h;
+    }
+}
+
+@for $i from 0 through 4 {
+    @for $j from 0 through 4 {
+        $convertX: $i * (100 / 4);
+        $convertXstring: unquote("#{$convertX}" + "%");
+        $convertY: $j * (100 / 4);
+        $convertYstring: unquote("#{$convertY}" + "%");
+        .tile[data-x="#{$convertX}"][data-y="#{$convertY}"] {
+            top: $convertYstring;
+            left: $convertXstring;
+        }
+    }
+}
+
+$i: 2;
+$listCounter: 1;
 // increment by * 2 until 2048    
-@while $i <= 2048 {        
+@while $i <=2048 {
     .tile_number[data-value="#{$i}"] {
         background: nth($color-list, $listCounter);
-        color: #fff;          
-    }      
-    $i: $i * 2; 
-    $listCounter: $listCounter + 1;     
+        color: #fff;
+        box-shadow: 0 0 1px 1px nth($color-list, $listCounter);
+    }
+    $i: $i * 2;
+    $listCounter: $listCounter+1;
 }
