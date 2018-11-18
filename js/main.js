@@ -6,9 +6,9 @@
  */
 
 /*
-* Dependencies:
-* Lodash, jQuery, hammerjs
-*/
+ * Dependencies:
+ * Lodash, jQuery, hammerjs
+ */
 
 function gameStart() {
     window.game = new Game(4);
@@ -17,8 +17,8 @@ function gameStart() {
 $(document).ready(gameStart);
 
 /*
-   * Game Board
-   */
+ * Game Board
+ */
 function Game(size) {
     this.rows = size;
     this.columns = size;
@@ -78,7 +78,7 @@ Game.prototype.initBoard = function () {
             rowCell.push(gridObj);
         }
     }
-    //     
+    //
 };
 
 /**
@@ -101,14 +101,20 @@ Game.prototype.initTile = function () {
  */
 Game.prototype.initEventListeners = function () {
     var self = this;
+    var getGameboard = document.getElementById("touchGameboard");
 
     /*
-        Touch events with Hammerjs
-    */
-    var getGameboard = document.getElementById("touchGameboard");
-    var hammertime = new Hammer(getGameboard);
-    hammertime.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
-    hammertime
+         Touch events with Hammerjs
+     */
+    window.hammertime && window.hammertime.destroy();
+    window.hammertime = new Hammer(getGameboard, {
+        recognizers: [
+            [Hammer.Swipe, {
+                direction: Hammer.DIRECTION_ALL
+            }]
+        ]
+    });
+    window.hammertime
         .on("swipeleft", function (ev) {
             self.move("left");
         })
@@ -124,9 +130,9 @@ Game.prototype.initEventListeners = function () {
     /**/
 
     /*
-        NOTE: Remove event listeners before applying new listeners,
-        because this initialization runs each time a new game is created
-    */
+         NOTE: Remove event listeners before applying new listeners,
+         because this initialization runs each time a new game is created
+     */
     // keypress events for up, down, left, right
     $(document)
         .off("keydown.move")
@@ -137,15 +143,15 @@ Game.prototype.initEventListeners = function () {
                 case 37:
                     self.move("left");
                     break;
-                // up
+                    // up
                 case 38:
                     self.move("up");
                     break;
-                // right
+                    // right
                 case 39:
                     self.move("right");
                     break;
-                // down
+                    // down
                 case 40:
                     self.move("down");
                     break;
@@ -337,14 +343,14 @@ Game.prototype.move = function (getDirection) {
     // loop through all tiles and run tile move foreach
     //
     gameBoard.forEach(function (val, index, array) {
-        val.tilesArray.length
-            ? val.tilesArray.forEach(function (val) {
+        val.tilesArray.length ?
+            val.tilesArray.forEach(function (val) {
                 if (val.move(direction, true)) {
                     hasAnyTileMoved = true;
                     val.move(direction);
                 }
-            })
-            : false;
+            }) :
+            false;
     });
     //
     // run animation logic at the end
@@ -353,8 +359,8 @@ Game.prototype.move = function (getDirection) {
 /**/
 
 /*
-   * Tile
-   */
+ * Tile
+ */
 function Tile(x, y, game) {
     this.game = game;
 
@@ -422,8 +428,8 @@ Tile.prototype.removeOldPosition = function (getX, getY) {
 /**/
 
 /**
-  * Animate to position
-  */
+ * Animate to position
+ */
 Tile.prototype.animatePosition = function (initalizeFlag) {
     var self = this;
     var fromLeft = this.x * (100 / this.game.rows);
@@ -434,9 +440,8 @@ Tile.prototype.animatePosition = function (initalizeFlag) {
 
     if (initalizeFlag) {
         this.el.addClass("initialize");
-    }
-    else {
-        this.el.removeClass("initialize")
+    } else {
+        this.el.removeClass("initialize");
     }
 
     function resolvePromise() {
@@ -444,6 +449,7 @@ Tile.prototype.animatePosition = function (initalizeFlag) {
         self.el.removeClass("animate");
         self.el.removeClass("initialize");
     }
+
     function setPosition() {
         self.el.addClass("animate");
         self.el.attr({
@@ -454,8 +460,7 @@ Tile.prototype.animatePosition = function (initalizeFlag) {
     if (initalizeFlag) {
         setPosition();
         window.setTimeout(resolvePromise, animationDuration + 50);
-    }
-    else {
+    } else {
         setPosition();
         window.setTimeout(resolvePromise, animationDuration);
     }
@@ -535,4 +540,4 @@ Tile.prototype.move = function (getDirection, checkFlag) {
         }
     }
 };
- /**/
+/**/
