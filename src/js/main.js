@@ -9,6 +9,7 @@
  * Dependencies:
  * Lodash, jQuery, hammerjs
  */
+
 function gameStart() {
     window.game = new Game(4);
     window.game.initialize();

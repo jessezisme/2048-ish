@@ -6,6 +6,7 @@ var sourceMaps = require('gulp-sourcemaps');
 var cssNano = require('gulp-cssnano');
 var sass = require('gulp-sass');
 var order = require("gulp-order");
+var babel = require('gulp-babel');
 
 
 /*=============================================
@@ -39,11 +40,14 @@ gulp.task('sass', function (cb) {
 =============================================*/
 gulp.task('js', function () {
 	return gulp.src([
+			'src/js/main.js'
+		])
+		.pipe(babel())
+		.pipe(gulp.src([
 			'bower_components/jQuery/dist/jquery.min.js',
 			'bower_components/lodash/dist/lodash.min.js',
 			'bower_components/hammerjs/hammer.min.js',
-			'src/js/main.js'
-		])
+		]))		
 		.pipe(order([
 			'bower_components/jQuery/dist/jquery.min.js',
 			'bower_components/lodash/dist/lodash.min.js',
