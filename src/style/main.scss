@@ -30,9 +30,14 @@ $color-list: #00d0a4,
 
 button,
 a {
+    color: inherit;
     &:hover {
         cursor: pointer;
     }
+}
+a {
+    text-decoration: underline;
+    font-style: italic;
 }
 
 .clearfix::after {
@@ -305,4 +310,32 @@ $listCounter: 1;
 
     $i: $i * 2;
     $listCounter: $listCounter+1;
+}
+
+.footer {
+    color: inherit;
+    font-size: .8rem;
+
+    a {
+        display: inline-block;
+        text-decoration: none;
+        color: inherit;
+
+        span {
+            text-decoration: underline;
+        }
+
+        &,
+        & svg {
+            vertical-align: middle;
+        }
+    }
+
+    .credit {
+        display: inline-block;
+
+        &::before {
+            content: ' | '
+        }
+    }
 }
