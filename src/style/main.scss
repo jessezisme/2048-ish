@@ -22,6 +22,17 @@ $color-list: #00d0a4,
 #1c0b19;
 /**/
 
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
 *,
 *:before,
 *:after {
@@ -31,10 +42,12 @@ $color-list: #00d0a4,
 button,
 a {
     color: inherit;
+
     &:hover {
         cursor: pointer;
     }
 }
+
 a {
     text-decoration: underline;
     font-style: italic;
