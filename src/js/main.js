@@ -1,5 +1,15 @@
 import '../style/main.scss';
 
+let gameInstance;
+
+/**
+ * Initializes the game
+ */
+function gameStart() {
+  gameInstance = new Game(4);
+  gameInstance.initialize();
+}
+
 /**
  * Game Board
  */
@@ -64,7 +74,7 @@ Game.prototype.initTile = function () {
   // isGameOver determines whether the game is finished; needs to be run: before and after creating tile
   this.isGameOver();
   const emptyCell = this.getRandomEmptyCell();
-  new Tile(emptyCell.x, emptyCell.y, window.game);
+  new Tile(emptyCell.x, emptyCell.y, gameInstance);
   // isGameOver determines whether the game is finished; needs to be run: before and after creating tile
   this.isGameOver();
 };
@@ -479,12 +489,5 @@ Tile.prototype.move = function (getDirection, _checkFlag) {
   }
 };
 
-/**
- * Initializes the game
- */
-function gameStart() {
-  window.game = new Game(4);
-  window.game.initialize();
-}
 // start it up
 gameStart();
