@@ -4,7 +4,12 @@
   "description": "A re-creation of the popular 2048 game. ",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-dev": "node_modules/.bin/webpack build --mode=development",
+    "watch-dev": "node_modules/.bin/webpack build --mode=development --watch",
+    "build-prod": "node_modules/.bin/webpack build --mode=production",
+    "watch-prod": "node_modules/.bin/webpack build --mode=production --watch",
+    "serve": "node_modules/.bin/browser-sync start --server --files 'dist/**/*' 'index.html' --port 4000 --reload-delay 1000"
   },
   "repository": {
     "type": "git",
@@ -19,18 +24,29 @@
     "url": "https://github.com/jessezisme/2048-ish/issues"
   },
   "homepage": "https://github.com/jessezisme/2048-ish#readme",
-  "dependencies": {},
+  "dependencies": {
+    "hammerjs": "^2.0.8",
+    "jquery": "^3.6.0",
+    "lodash": "^4.17.21"
+  },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.3.1",
-    "gulp": "^4.0.0",
-    "gulp-babel": "^8.0.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-cssnano": "^2.1.3",
-    "gulp-order": "^1.2.0",
-    "gulp-plumber": "^1.2.1",
-    "gulp-sass": "^4.0.2",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-uglify": "^3.0.1"
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "autoprefixer": "^10.3.4",
+    "babel-loader": "^8.2.2",
+    "browser-sync": "^2.27.5",
+    "css-loader": "^6.2.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "mini-css-extract-plugin": "^2.3.0",
+    "postcss": "^8.3.6",
+    "postcss-loader": "^6.1.1",
+    "postcss-minify": "^1.1.0",
+    "postcss-preset-env": "^6.7.0",
+    "sass": "^1.39.2",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.2.1",
+    "webpack": "^5.52.1",
+    "webpack-cli": "^4.8.0"
   }
 }
