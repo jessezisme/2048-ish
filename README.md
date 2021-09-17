@@ -15,5 +15,4 @@ You can also view the code and play it on my Codepen:
 This small project uses Webpack for bundling. To run it locally for development:
 
 1. npm install
-2. Run either **`npm run watch-dev`** or **`npm run watch-prod`**, which will run a webpack build in either development or production mode (code will be minified) and watch for changes.
-3. In a separate terminal window, use **`npm run serve`** to run a browsersync local server and view at `http://localhost:4000/`. The port can be changed in the `serve` script of `package.json`.
+2. Run **`npm run serve`**, which will run a webpack-dev-server at `http://localhost:4000/` and watch for changes in `src` directory. This `src` directory contains the `index.html` and other necessary files that are compiled to `dist`.
