@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = (ENV, ARGV) => {
   return {
@@ -14,7 +15,30 @@ module.exports = (ENV, ARGV) => {
       ignored: /node_modules/,
       aggregateTimeout: 1000,
     },
+    devServer: {
+      static: {
+        directory: path.join(__dirname, 'dist'),
+      },
+      devMiddleware: {
+        writeToDisk: true,
+      },
+      watchFiles: {
+        paths: ['src/*.html', 'src/**/*.html', 'dist/**/*', 'dist/*'],
+        options: {
+          usePolling: true,
+        },
+      },
+      hot: false,
+      compress: false,
+      port: 4000,
+    },
     plugins: [
+      new CopyPlugin({
+        patterns: [
+          { from: 'src/index.html', to: '' },
+          { from: 'src/favicon', to: 'favicon' },
+        ],
+      }),
       new MiniCssExtractPlugin({
         filename: '/css/main.css',
       }),
