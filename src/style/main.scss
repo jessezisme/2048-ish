@@ -1,18 +1,20 @@
 @import 'normalize';
 
-/*
-  Variables:
-*/
+/*=============================================
+=            variables            =
+=============================================*/
 $grid-max-width: 500px;
 $grid-padding: 8px;
 $grid-border-radius: 5px;
-// white
 $color-background: #f2efea;
 $color-accent1: #f9d49a;
 $color-accent2: #d4a8cf;
 $color-list: #00d0a4, #dd7373, #7d53de, #6622cc, #00bfb2, #c06ff2, #340068, #3e92cc, #d8315b, #1c0b19, #1c0b19;
-/**/
+/*=====  End of variables  ======*/
 
+/*=============================================
+=            helper classes         =
+=============================================*/
 .sr-only {
   position: absolute;
   width: 1px;
@@ -23,11 +25,23 @@ $color-list: #00d0a4, #dd7373, #7d53de, #6622cc, #00bfb2, #c06ff2, #340068, #3e9
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+/*=====  End of helper classes  ======*/
 
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  width: 100%;
+  font-size: 1rem;
+  font-family: 'Rubik', sans-serif;
+  line-height: 1.5em;
+  color: #fff;
+  background: #160140;
+  background: linear-gradient(to top, #160140, #261535);
 }
 
 button,
@@ -44,21 +58,8 @@ a {
   font-style: italic;
 }
 
-.clearfix::after {
-  content: '';
-  display: block;
-  clear: both;
-}
-
-html {
-  min-height: 100%;
-  width: 100%;
-  font-size: 16px;
-  font-family: 'Rubik', sans-serif;
-  line-height: 1.5em;
-  color: #fff;
-  background: #160140;
-  background: linear-gradient(to top, #160140, #261535);
+h2 {
+  font-style: italic;
 }
 
 .wrapper {
@@ -67,12 +68,9 @@ html {
   padding: 15px;
 }
 
-h2 {
-  font-style: italic;
-}
-
-/* Introduction */
-
+/*=============================================
+=            intro            =
+=============================================*/
 .intro {
   margin-bottom: 60px;
 
@@ -83,10 +81,11 @@ h2 {
   }
 }
 
-/**/
+/*=====  End of intro  ======*/
 
-/* Guide instructions */
-
+/*=============================================
+=            guide instructions            =
+=============================================*/
 .guide {
   border-bottom: 1px solid grey;
 
@@ -104,18 +103,13 @@ h2 {
 }
 
 .controls {
-  &_game,
-  &_score {
-    display: inline-block;
-    width: 50%;
-    float: left;
-
-    @media all and (max-width: 767px) {
-      width: 100%;
-    }
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 15px 15px;
+  padding-bottom: 30px;
 
   &_game-btn {
+    display: inline-block;
     margin-bottom: 1rem;
     padding: 0.5em 0.75em;
     background: transparent;
@@ -131,8 +125,7 @@ h2 {
 
   &_score {
     display: inline-block;
-    min-width: 4em;
-    margin-bottom: 4rem;
+    min-width: 175px;
     padding: 0.5em 0.75em;
     background: #0000003b;
     text-align: center;
@@ -153,16 +146,14 @@ h2 {
     }
   }
 }
+/*=====  End of guide instructions  ======*/
 
-/**/
-
-/*
-  Gameboard:
-  the container for the static grid background; and generated tiles/numbers;
-*/
-
+/*=============================================
+=            gameboard            =
+=============================================*/
+// the container for the static grid background; and generated tiles/numbers;
 .gameboard {
-  /* Position: relative; set for tile-container, which absolutely positions over it to match grid's dimensions; */
+  // Position: relative; set for tile-container, which absolutely positions over it to match grid's dimensions;
   position: relative;
   width: 100%;
   max-width: 500px;
@@ -180,14 +171,12 @@ h2 {
     padding-bottom: 100%;
   }
 }
+/*=====  End of gameboard  ======*/
 
-/**/
-
-/*
-  Grid:
-  Creates the static grid background and individual grid cells;
-*/
-
+/*=============================================
+=            grid             =
+=============================================*/
+// Creates the static grid background and individual grid cells;
 .grid {
   width: 100%;
   height: 100%;
@@ -208,17 +197,14 @@ h2 {
     background-clip: content-box;
   }
 }
+/*=====  End of grid  ======*/
 
-/**/
-
-/*
-  Tile container:
-  Contains the dynamically-generated tiles;
-  absolutely positioned over gameboard to match grid dimensions;
-*/
-
+/*=============================================
+=            tile             =
+=============================================*/
+// Contains the dynamically-generated tiles;
+// absolutely positioned over gameboard to match grid dimensions;
 .tile-container {
-  /* absolutely positioned over gameboard to match dimensions */
   position: absolute;
   top: 0;
   left: 0;
@@ -314,8 +300,13 @@ $listCounter: 1;
   $i: $i * 2;
   $listCounter: $listCounter + 1;
 }
+/*=====  End of tile  ======*/
 
+/*=============================================
+=            footer            =
+=============================================*/
 .footer {
+  margin-top: 1rem;
   color: inherit;
   font-size: 0.8rem;
 
@@ -342,3 +333,4 @@ $listCounter: 1;
     }
   }
 }
+/*=====  End of footer  ======*/
