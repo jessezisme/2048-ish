@@ -5,7 +5,7 @@ This is a complete rebuild of the popular, original 2048 game. It is coded entir
 ## Links
 
 You can play it here:
-**https://jessezisme.github.io/2048-ish/**
+**https://2048ish.netlify.app/**
 <br>
 You can also view the code and play it on my Codepen:
 **https://codepen.io/jessezisme/**
