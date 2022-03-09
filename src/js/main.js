@@ -3,7 +3,7 @@ import '../style/main.scss';
 let gameInstance;
 const TILE_HTML_STRING = `<div class="tile"> <span class="tile_number"> </span> </div>`;
 const GRID_CELL_HTML_STRING = `<div class="grid_cell"></div>`;
-const ANIMATION_DURATION = 175;
+const ANIMATION_DURATION = 100;
 
 /**
  * Game Board
@@ -427,6 +427,7 @@ Game.prototype.destroyGame = function () {
  * Run all initializations
  */
 Game.prototype.initialize = function () {
+    this.destroyGame();
     this.clearBoardUI();
     this.setScoreboard(0);
     this.initBoard();

@@ -77,7 +77,14 @@ h2 {
     &_title {
         text-align: center;
         color: $color-accent1;
-        font-size: 3rem;
+        font-size: 2rem;
+        line-height: 1em; 
+    }
+}
+
+@media all and (min-width: 375px) {
+    .intro_title {
+        font-size: 3rem; 
     }
 }
 
@@ -159,7 +166,7 @@ h2 {
     max-width: 500px;
     height: 100%;
     max-height: 500px;
-    margin: auto;
+    margin: 0 auto 4rem auto;
     padding: $grid-padding;
     background: #ffffff08;
     border-radius: $grid-border-radius;
@@ -215,20 +222,20 @@ h2 {
 }
 
 .tile {
-    @extend .grid_cell; //display:table is used to vertically align number
-    display: table;
+    @extend .grid_cell;
+    display: inline-block;
     background: #eee4da;
     background-clip: content-box;
     position: absolute;
     z-index: 2;
     will-change: top, left;
     transition-property: top, left;
-    transition-duration: 0.175s;
+    transition-duration: 0.1s;
     transition-timing-function: ease-out;
 
     &.initialize {
         animation-name: newTile;
-        animation-duration: 0.175s;
+        animation-duration: 0.1s;
         animation-timing-function: linear;
         animation-fill-mode: forwards;
     }
@@ -255,12 +262,33 @@ h2 {
     }
 
     &_number {
-        display: table-cell;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
         vertical-align: middle;
         text-align: center;
-        font-size: 2rem;
+        font-size: 1rem;
         font-weight: bold;
         color: white;
+        text-shadow: 0px 0px 4px #020202;
+    }
+    @media all and (min-width: 375px) {
+        &_number {
+            font-size: 1.25rem;
+        }
+    }
+
+    @media all and (min-width: 575px) {
+        &_number {
+            font-size: 1.5rem;
+        }
+    }
+    @media all and (min-width: 767px) {
+        &_number {
+            font-size: 1.75rem;
+        }
     }
 }
 

@@ -36,7 +36,7 @@ module.exports = (ENV, ARGV) => {
             new CopyPlugin({
                 patterns: [
                     { from: 'src/index.html', to: '' },
-                    { from: 'src/favicon', to: 'favicon' },
+                    { from: 'src/assets', to: 'assets' },
                 ],
             }),
             new MiniCssExtractPlugin({
