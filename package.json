@@ -1,52 +1,53 @@
 {
-  "name": "2048-ish",
-  "version": "1.0.0",
-  "description": "A re-creation of the popular 2048 game. ",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build-dev": "node_modules/.bin/webpack build --mode=development",
-    "build-prod": "node_modules/.bin/webpack build --mode=production",
-    "serve": "node_modules/.bin/webpack serve --mode=development"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jessezisme/2048-ish.git"
-  },
-  "keywords": [
-    "2048"
-  ],
-  "author": "Jesse Z",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jessezisme/2048-ish/issues"
-  },
-  "homepage": "https://github.com/jessezisme/2048-ish#readme",
-  "dependencies": {
-    "hammerjs": "^2.0.8",
-    "jquery": "^3.6.0",
-    "lodash": "^4.17.21"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.15.5",
-    "@babel/preset-env": "^7.15.6",
-    "autoprefixer": "^10.3.4",
-    "babel-loader": "^8.2.2",
-    "browser-sync": "^2.27.5",
-    "copy-webpack-plugin": "^9.0.1",
-    "css-loader": "^6.2.0",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "mini-css-extract-plugin": "^2.3.0",
-    "postcss": "^8.3.6",
-    "postcss-loader": "^6.1.1",
-    "postcss-minify": "^1.1.0",
-    "postcss-preset-env": "^6.7.0",
-    "sass": "^1.39.2",
-    "sass-loader": "^12.1.0",
-    "style-loader": "^3.2.1",
-    "webpack": "^5.52.1",
-    "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^4.2.1"
-  }
+    "name": "2048-ish",
+    "version": "1.0.0",
+    "description": "A re-creation of the popular 2048 game. ",
+    "main": "main.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build-dev": "node_modules/.bin/cross-env NODE_ENV=development node_modules/.bin/webpack build --env NODE_ENV=development --mode development",
+        "serve-dev": "node_modules/.bin/cross-env NODE_ENV=development node_modules/.bin/webpack serve --env NODE_ENV=development --mode development",
+        "build-prod": "node_modules/.bin/cross-env NODE_ENV=production node_modules/.bin/webpack build --env NODE_ENV=production --mode production",
+        "serve-prod": "node_modules/.bin/cross-env NODE_ENV=production node_modules/.bin/webpack serve --env NODE_ENV=production --mode production"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jessezisme/2048-ish.git"
+    },
+    "keywords": [
+        "2048"
+    ],
+    "author": "Jesse Z",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/jessezisme/2048-ish/issues"
+    },
+    "homepage": "https://github.com/jessezisme/2048-ish#readme",
+    "dependencies": {
+        "hammerjs": "^2.0.8"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.15.5",
+        "@babel/preset-env": "^7.15.6",
+        "autoprefixer": "^10.3.4",
+        "babel-loader": "^8.2.2",
+        "browser-sync": "^2.27.5",
+        "copy-webpack-plugin": "^9.0.1",
+        "cross-env": "^7.0.3",
+        "css-loader": "^6.2.0",
+        "eslint": "^7.32.0",
+        "eslint-config-prettier": "^8.3.0",
+        "handlebars-webpack-plugin": "^2.2.1",
+        "mini-css-extract-plugin": "^2.3.0",
+        "postcss": "^8.3.6",
+        "postcss-loader": "^6.1.1",
+        "postcss-minify": "^1.1.0",
+        "postcss-preset-env": "^6.7.0",
+        "sass": "^1.39.2",
+        "sass-loader": "^12.1.0",
+        "style-loader": "^3.2.1",
+        "webpack": "^5.52.1",
+        "webpack-cli": "^4.8.0",
+        "webpack-dev-server": "^4.2.1"
+    }
 }
