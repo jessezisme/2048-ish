@@ -3,13 +3,25 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const HandlebarsPlugin = require('handlebars-webpack-plugin');
 
 module.exports = (ENV, ARGV) => {
+    const isNodeEnvDefined = ENV.NODE_ENV === 'production' || ENV.NODE_ENV === 'development';
+
+    // Check that webpack ENV.NODE_ENV variable has been set to valid value, i.e. 'production' or 'development'
+    if (!isNodeEnvDefined) {
+        throw new Error(
+            `Webpack --env NODE_ENV variable must be set to development or production, 
+            i.e. --env NODE_ENV=development or --env NODE_ENV=production`
+        );
+    }
+
     return {
         entry: ['./src/js/main.js'],
         output: {
             path: path.resolve(__dirname, 'dist'),
             filename: 'js/all.js',
+            clean: true,
         },
         watchOptions: {
             ignored: /node_modules/,
@@ -35,9 +47,18 @@ module.exports = (ENV, ARGV) => {
         plugins: [
             new CopyPlugin({
                 patterns: [
-                    { from: 'src/index.html', to: '' },
+                    // { from: 'src/index.html', to: '' },
                     { from: 'src/assets', to: 'assets' },
                 ],
+            }),
+            new HandlebarsPlugin({
+                entry: path.join(__dirname, 'src', '*.hbs'),
+                output: path.join(__dirname, 'dist', '[name].html'),
+                data: {
+                    ENV: ENV,
+                    isEnvDev: ENV.NODE_ENV === 'development',
+                    isEnvProd: ENV.NODE_ENV === 'production',
+                },
             }),
             new MiniCssExtractPlugin({
                 filename: '/css/main.css',
