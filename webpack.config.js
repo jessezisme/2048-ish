@@ -47,18 +47,9 @@ module.exports = (ENV, ARGV) => {
         plugins: [
             new CopyPlugin({
                 patterns: [
-                    // { from: 'src/index.html', to: '' },
+                    { from: 'src/index.html', to: '' },
                     { from: 'src/assets', to: 'assets' },
                 ],
-            }),
-            new HandlebarsPlugin({
-                entry: path.join(__dirname, 'src', '*.hbs'),
-                output: path.join(__dirname, 'dist', '[name].html'),
-                data: {
-                    ENV: ENV,
-                    isEnvDev: ENV.NODE_ENV === 'development',
-                    isEnvProd: ENV.NODE_ENV === 'production',
-                },
             }),
             new MiniCssExtractPlugin({
                 filename: '/css/main.css',
