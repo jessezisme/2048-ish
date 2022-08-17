@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const HandlebarsPlugin = require('handlebars-webpack-plugin');
 
 module.exports = (ENV, ARGV) => {
     const isNodeEnvDefined = ENV.NODE_ENV === 'production' || ENV.NODE_ENV === 'development';
