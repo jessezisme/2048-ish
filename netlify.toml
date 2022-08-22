@@ -1,0 +1,21 @@
+# Default deploy preview settings:
+[context.deploy-preview]
+  command = "npm run build-dev"
+
+# Branch deploy context:
+# All deploys that are not from a pull/merge request
+# or from the production branch will inherit these settings.
+[context.branch-deploy]
+  command = "npm run build-prod"
+
+# Production context:
+# All deploys from the main repository branch
+# will inherit these settings.
+[context.production]
+  command = "npm run build-prod"
+
+# Specific branch context:
+# Deploys from this branch will take these settings
+# and override their current ones.
+[context.test]
+  command = "npm run build-dev"

@@ -16,69 +16,76 @@ $color-list: #00d0a4, #dd7373, #7d53de, #6622cc, #00bfb2, #c06ff2, #340068, #3e9
 =            helper classes         =
 =============================================*/
 .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }
 /*=====  End of helper classes  ======*/
 
 *,
 *:before,
 *:after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html {
-  min-height: 100%;
-  width: 100%;
-  font-size: 1rem;
-  font-family: 'Rubik', sans-serif;
-  line-height: 1.5em;
-  color: #fff;
-  background: #160140;
-  background: linear-gradient(to top, #160140, #261535);
+    min-height: 100%;
+    width: 100%;
+    font-size: 1rem;
+    font-family: 'Rubik', sans-serif;
+    line-height: 1.5em;
+    color: #fff;
+    background: #160140;
+    background: linear-gradient(to top, #160140, #261535);
 }
 
 button,
 a {
-  color: inherit;
+    color: inherit;
 
-  &:hover {
-    cursor: pointer;
-  }
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 a {
-  text-decoration: underline;
-  font-style: italic;
+    text-decoration: underline;
+    font-style: italic;
 }
 
 h2 {
-  font-style: italic;
+    font-style: italic;
 }
 
 .wrapper {
-  max-width: $grid-max-width;
-  margin: 0 auto;
-  padding: 15px;
+    max-width: $grid-max-width;
+    margin: 0 auto;
+    padding: 15px;
 }
 
 /*=============================================
 =            intro            =
 =============================================*/
 .intro {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 
-  &_title {
-    text-align: center;
-    color: $color-accent1;
-    font-size: 3rem;
-  }
+    &_title {
+        text-align: center;
+        color: $color-accent1;
+        font-size: 2rem;
+        line-height: 1em; 
+    }
+}
+
+@media all and (min-width: 375px) {
+    .intro_title {
+        font-size: 3rem; 
+    }
 }
 
 /*=====  End of intro  ======*/
@@ -87,64 +94,64 @@ h2 {
 =            guide instructions            =
 =============================================*/
 .guide {
-  border-bottom: 1px solid grey;
+    border-bottom: 1px solid grey;
 
-  &:first-of-type {
-    margin-top: 4rem;
-    border-top: 1px solid gray;
-  }
+    &:first-of-type {
+        margin-top: 4rem;
+        border-top: 1px solid gray;
+    }
 
-  &_arrow {
-    display: inline-block;
-    margin: 15px;
-    font-size: 3rem;
-    color: #fff;
-  }
+    &_arrow {
+        display: inline-block;
+        margin: 15px;
+        font-size: 3rem;
+        color: #fff;
+    }
 }
 
 .controls {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 15px 15px;
-  padding-bottom: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 15px 15px;
+    padding-bottom: 30px;
 
-  &_game-btn {
-    display: inline-block;
-    margin-bottom: 1rem;
-    padding: 0.5em 0.75em;
-    background: transparent;
-    color: #f9d49a;
-    outline: 2px solid #f9d49a;
-    appearance: none;
-    border: 5px solid transparent;
-    box-shadow: inset 0 0 0px 2px #d4a8cf;
-    letter-spacing: 0.1em;
-    font-weight: bold;
-    text-transform: lowercase;
-  }
-
-  &_score {
-    display: inline-block;
-    min-width: 175px;
-    padding: 0.5em 0.75em;
-    background: #0000003b;
-    text-align: center;
-    background: linear-gradient(90deg, #f9d49a, #d4a8cf);
-
-    &-label,
-    &-text {
-      display: inline-block;
+    &_game-btn {
+        display: inline-block;
+        margin-bottom: 1rem;
+        padding: 0.5em 0.75em;
+        background: transparent;
+        color: #f9d49a;
+        outline: 2px solid #f9d49a;
+        appearance: none;
+        border: 5px solid transparent;
+        box-shadow: inset 0 0 0px 2px #d4a8cf;
+        letter-spacing: 0.1em;
+        font-weight: bold;
+        text-transform: lowercase;
     }
 
-    &-label {
-      color: initial;
-    }
+    &_score {
+        display: inline-block;
+        min-width: 175px;
+        padding: 0.5em 0.75em;
+        background: #0000003b;
+        text-align: center;
+        background: linear-gradient(90deg, #f9d49a, #d4a8cf);
 
-    &-text {
-      color: #4a3647;
-      font-size: 2rem;
+        &-label,
+        &-text {
+            display: inline-block;
+        }
+
+        &-label {
+            color: initial;
+        }
+
+        &-text {
+            color: #4a3647;
+            font-size: 2rem;
+        }
     }
-  }
 }
 /*=====  End of guide instructions  ======*/
 
@@ -153,23 +160,23 @@ h2 {
 =============================================*/
 // the container for the static grid background; and generated tiles/numbers;
 .gameboard {
-  // Position: relative; set for tile-container, which absolutely positions over it to match grid's dimensions;
-  position: relative;
-  width: 100%;
-  max-width: 500px;
-  height: 100%;
-  max-height: 500px;
-  margin: auto;
-  padding: $grid-padding;
-  background: #ffffff08;
-  border-radius: $grid-border-radius;
-  box-shadow: 0 0 8px 0px $color-accent1;
+    // Position: relative; set for tile-container, which absolutely positions over it to match grid's dimensions;
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    max-height: 500px;
+    margin: 0 auto 4rem auto;
+    padding: $grid-padding;
+    background: #ffffff08;
+    border-radius: $grid-border-radius;
+    box-shadow: 0 0 8px 0px $color-accent1;
 
-  &::before {
-    content: '';
-    display: block;
-    padding-bottom: 100%;
-  }
+    &::before {
+        content: '';
+        display: block;
+        padding-bottom: 100%;
+    }
 }
 /*=====  End of gameboard  ======*/
 
@@ -178,24 +185,24 @@ h2 {
 =============================================*/
 // Creates the static grid background and individual grid cells;
 .grid {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  margin: auto;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
 
-  &_cell {
-    display: inline-block;
-    height: 25%;
-    width: 25%;
-    padding: $grid-padding;
-    float: left;
-    background: rgba(238, 228, 218, 0.35);
-    background-clip: content-box;
-  }
+    &_cell {
+        display: inline-block;
+        height: 25%;
+        width: 25%;
+        padding: $grid-padding;
+        float: left;
+        background: rgba(238, 228, 218, 0.35);
+        background-clip: content-box;
+    }
 }
 /*=====  End of grid  ======*/
 
@@ -205,85 +212,106 @@ h2 {
 // Contains the dynamically-generated tiles;
 // absolutely positioned over gameboard to match grid dimensions;
 .tile-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  border-radius: $grid-border-radius;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border-radius: $grid-border-radius;
 }
 
 .tile {
-  @extend .grid_cell; //display:table is used to vertically align number
-  display: table;
-  background: #eee4da;
-  background-clip: content-box;
-  position: absolute;
-  z-index: 2;
-  will-change: top, left;
-  transition-property: top, left;
-  transition-duration: 0.175s;
-  transition-timing-function: ease-out;
+    @extend .grid_cell;
+    display: inline-block;
+    background: #eee4da;
+    background-clip: content-box;
+    position: absolute;
+    z-index: 2;
+    will-change: top, left;
+    transition-property: top, left;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-out;
 
-  &.initialize {
-    animation-name: newTile;
-    animation-duration: 0.175s;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-  }
-
-  @keyframes newTile {
-    0% {
-      opacity: 0;
+    &.initialize {
+        animation-name: newTile;
+        animation-duration: 0.1s;
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
     }
 
-    50% {
-      opacity: 0;
-      transform: scale(0);
+    @keyframes newTile {
+        0% {
+            opacity: 0;
+        }
+
+        50% {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        75% {
+            opacity: 1;
+            transform: scale(0.5);
+        }
+
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
     }
 
-    75% {
-      opacity: 1;
-      transform: scale(0.5);
+    &_number {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        vertical-align: middle;
+        text-align: center;
+        font-size: 1rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 0px 0px 4px #020202;
+    }
+    @media all and (min-width: 375px) {
+        &_number {
+            font-size: 1.25rem;
+        }
     }
 
-    100% {
-      opacity: 1;
-      transform: scale(1);
+    @media all and (min-width: 575px) {
+        &_number {
+            font-size: 1.5rem;
+        }
     }
-  }
-
-  &_number {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bold;
-    color: white;
-  }
+    @media all and (min-width: 767px) {
+        &_number {
+            font-size: 1.75rem;
+        }
+    }
 }
 
 @for $g from 1 through 16 {
-  $h: $g + 1;
+    $h: $g + 1;
 
-  .tile:nth-of-type(#{$g}) {
-    z-index: $h;
-  }
+    .tile:nth-of-type(#{$g}) {
+        z-index: $h;
+    }
 }
 
 @for $i from 0 through 4 {
-  @for $j from 0 through 4 {
-    $convertX: $i * (100 / 4);
-    $convertXstring: unquote('#{$convertX}'+'%');
-    $convertY: $j * (100 / 4);
-    $convertYstring: unquote('#{$convertY}'+'%');
+    @for $j from 0 through 4 {
+        $convertX: $i * (100 / 4);
+        $convertXstring: unquote('#{$convertX}'+'%');
+        $convertY: $j * (100 / 4);
+        $convertYstring: unquote('#{$convertY}'+'%');
 
-    .tile[data-x='#{$convertX}'][data-y='#{$convertY}'] {
-      top: $convertYstring;
-      left: $convertXstring;
+        .tile[data-x='#{$convertX}'][data-y='#{$convertY}'] {
+            top: $convertYstring;
+            left: $convertXstring;
+        }
     }
-  }
 }
 
 $i: 2;
@@ -291,14 +319,14 @@ $listCounter: 1;
 
 // increment by * 2 until 2048
 @while $i <=2048 {
-  .tile_number[data-value='#{$i}'] {
-    background: nth($color-list, $listCounter);
-    color: #fff;
-    box-shadow: 0 0 1px 1px nth($color-list, $listCounter);
-  }
+    .tile_number[data-value='#{$i}'] {
+        background: nth($color-list, $listCounter);
+        color: #fff;
+        box-shadow: 0 0 1px 1px nth($color-list, $listCounter);
+    }
 
-  $i: $i * 2;
-  $listCounter: $listCounter + 1;
+    $i: $i * 2;
+    $listCounter: $listCounter + 1;
 }
 /*=====  End of tile  ======*/
 
@@ -306,31 +334,31 @@ $listCounter: 1;
 =            footer            =
 =============================================*/
 .footer {
-  margin-top: 1rem;
-  color: inherit;
-  font-size: 0.8rem;
-
-  a {
-    display: inline-block;
-    text-decoration: none;
+    margin-top: 1rem;
     color: inherit;
+    font-size: 0.8rem;
 
-    span {
-      text-decoration: underline;
+    a {
+        display: inline-block;
+        text-decoration: none;
+        color: inherit;
+
+        span {
+            text-decoration: underline;
+        }
+
+        &,
+        & svg {
+            vertical-align: middle;
+        }
     }
 
-    &,
-    & svg {
-      vertical-align: middle;
-    }
-  }
+    .credit {
+        display: inline-block;
 
-  .credit {
-    display: inline-block;
-
-    &::before {
-      content: ' | ';
+        &::before {
+            content: ' | ';
+        }
     }
-  }
 }
 /*=====  End of footer  ======*/
